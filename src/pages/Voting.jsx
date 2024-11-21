@@ -59,7 +59,7 @@ const Voting = () => {
         <option value="">Select Candidate</option>
         {candidates.map((candidate) => (
           <option key={candidate._id} value={candidate.name}>
-            {candidate.name}
+            {candidate.name} ({candidate.votes} votes)
           </option>
         ))}
       </select>

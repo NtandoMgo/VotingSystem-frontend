@@ -1,78 +1,130 @@
 /* Navbar Styles */
 .navbar {
-    background-color: #333;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000; /* Ensure it stays on top */
+  background-color: #333;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensure it stays on top */
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.navbar-logo {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+/* Hamburger icon styles */
+.hamburger-icon {
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+}
+
+/* Hamburger bars */
+.hamburger-icon .bar {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 10px;
+  transition: background-color 0.3s, border-bottom 0.3s;
+}
+
+.navbar-link:hover {
+  border-bottom: 3px solid #9ECADF;
+}
+
+/* Active Link Styles */
+.navbar-link.active {
+  border-bottom: 3px solid #fff;
+  border-radius: 5px;
+}
+
+/* Help Button */
+.navbar-link-help-btn {
+  background-color: #616B70;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.navbar-link-help-btn:hover {
+  background-color: #4b5459;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  /* Show the hamburger icon on mobile */
+  .hamburger-icon {
+    display: flex; /* Show the hamburger icon when the menu is closed */
   }
-  
-  .navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .navbar-logo {
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
+
+  /* Initially hide navbar links on mobile */
   .navbar-links {
-    display: flex;
-    gap: 20px;
+    display: none; /* Hide the links */
+    width: 100%;
+    text-align: center;
+    gap: 10px;
+    flex-direction: column;
+    padding-top: 10px;
   }
-  
+
+  /* Show the navbar links when the menu is open */
+  .navbar-links.open {
+    display: flex; /* Show the links when the menu is open */
+  }
+
   .navbar-link {
-    color: white;
-    text-decoration: none;
+    padding: 15px;
     font-size: 18px;
-    padding: 10px;
-    transition: background-color 0.3s;
   }
-  
-  .navbar-link:hover {
-    background-color: #575757;
+
+  /* Hide the hamburger icon when the menu is open */
+  .hamburger-icon {
+    display: flex;
   }
-  
-  /* Active Link Styles */
-  .navbar-link.active {
-    background-color: #4caf50; /* Green for active link */
-    border-radius: 5px;
+
+  .navbar-links.open ~ .hamburger-icon {
+    display: none;  /* Hide hamburger icon when the menu is open */
   }
-  
-  /* Mobile responsiveness */
-  @media (max-width: 768px) {
-    .navbar-links {
-      display: block;
-      text-align: center;
-      gap: 10px;
-    }
-  
-    .navbar-link {
-      padding: 15px;
-    }
-  }
-  
-  /* Page content */
-  .page {
-    margin-top: 80px; /* Give space for the fixed navbar */
-    padding: 20px;
-  }
-  
-  .register-form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
+}
+
+.page {
+  margin-top: 80px; /* Give space for the fixed navbar */
+  padding: 20px;
+}
+
+.register-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}

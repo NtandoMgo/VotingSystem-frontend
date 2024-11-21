@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/Registration.css';
 
@@ -12,6 +12,7 @@ const Registration = () => {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false); // State to handle the confirmation prompt
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false); // State to check if the form is submitted
   const navigate = useNavigate();
   const location = useLocation(); // Use location to get the candidate data
 
@@ -43,7 +44,7 @@ const Registration = () => {
     e.preventDefault();
     setError('');
     setSuccessMessage('');
-
+    
     const validationError = validateForm();
     if (validationError) {
       setError(validationError);
@@ -67,6 +68,7 @@ const Registration = () => {
       } else {
         // If no candidate is selected, just redirect to the voting page
         setSuccessMessage('Registration successful');
+        setIsFormSubmitted(true); // Form has been submitted successfully
         setTimeout(() => navigate('/vote'), 2000);
       }
 
@@ -87,8 +89,8 @@ const Registration = () => {
       const voteData = await voteResponse.json();
       if (!voteResponse.ok) throw new Error(voteData.message || 'Voting failed');
 
-      setSuccessMessage(voteData.message || 'Vote successfully cast!');
-      setTimeout(() => navigate('/'), 1000); // Redirect to the home page after voting
+      setSuccessMessage(`You successfully voted for ${selectedCandidate}`);
+      setTimeout(() => navigate('/'), 2000); // Redirect to the home page after voting
     } catch (err) {
       setError(err.message || 'Failed to cast vote');
     }
@@ -107,63 +109,65 @@ const Registration = () => {
       {error && <p className="error">{error}</p>}
       {successMessage && <p className="success">{successMessage}</p>}
       
-      {/* Registration form */}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Enter your full name"
-            required
-          />
-        </div>
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Enter your email address"
-            required
-          />
-        </div>
-        <div>
-          <label>ID Number</label>
-          <input
-            type="text"
-            name="idNumber"
-            value={formData.idNumber}
-            onChange={handleChange}
-            placeholder="Enter your 13-digit ID number"
-            required
-          />
-        </div>
-        <div>
-          <label>Province</label>
-          <select
-            name="province"
-            value={formData.province}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Province</option>
-            <option value="Western Cape">Western Cape</option>
-            <option value="Eastern Cape">Eastern Cape</option>
-            <option value="KwaZulu-Natal">KwaZulu-Natal</option>
-            <option value="Gauteng">Gauteng</option>
-            <option value="Mpumalanga">Mpumalanga</option>
-            <option value="Limpopo">Limpopo</option>
-            <option value="Free State">Free State</option>
-            <option value="North West">North West</option>
-            <option value="Northern Cape">Northern Cape</option>
-          </select>
-        </div>
-        <button type="submit">Register</button>
-      </form>
+      {/* Only show the form if it's not submitted */}
+      {!isFormSubmitted && !showConfirmation && (
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter your full name"
+              required
+            />
+          </div>
+          <div>
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email address"
+              required
+            />
+          </div>
+          <div>
+            <label>ID Number</label>
+            <input
+              type="text"
+              name="idNumber"
+              value={formData.idNumber}
+              onChange={handleChange}
+              placeholder="Enter your 13-digit ID number"
+              required
+            />
+          </div>
+          <div>
+            <label>Province</label>
+            <select
+              name="province"
+              value={formData.province}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Province</option>
+              <option value="Western Cape">Western Cape</option>
+              <option value="Eastern Cape">Eastern Cape</option>
+              <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+              <option value="Gauteng">Gauteng</option>
+              <option value="Mpumalanga">Mpumalanga</option>
+              <option value="Limpopo">Limpopo</option>
+              <option value="Free State">Free State</option>
+              <option value="North West">North West</option>
+              <option value="Northern Cape">Northern Cape</option>
+            </select>
+          </div>
+          <button type="submit">Register</button>
+        </form>
+      )}
 
       {/* Confirmation modal if a candidate was selected */}
       {showConfirmation && (

@@ -81,14 +81,14 @@ const Registration = () => {
       const voteResponse = await fetch('https://votingsystem-backend.onrender.com/vote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: formData.email, candidateName: selectedCandidate }),
+        body: JSON.stringify({ idNumber: formData.idNumber, candidateName: selectedCandidate }),
       });
 
       const voteData = await voteResponse.json();
       if (!voteResponse.ok) throw new Error(voteData.message || 'Voting failed');
 
       setSuccessMessage(voteData.message || 'Vote successfully cast!');
-      setTimeout(() => navigate('/'), 2000); // Redirect to the home page after voting
+      setTimeout(() => navigate('/'), 1000); // Redirect to the home page after voting
     } catch (err) {
       setError(err.message || 'Failed to cast vote');
     }

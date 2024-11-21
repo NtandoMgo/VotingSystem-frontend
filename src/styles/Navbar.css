@@ -1,130 +1,77 @@
-/* Navbar Styles */
+/* Navbar.css */
+
+/* General navbar styles */
 .navbar {
+  position: fixed; /* Ensures it stays on top even when scrolling */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width of the device */
   background-color: #333;
-  padding: 15px;
+  color: #fff;
+  padding: 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000; /* Ensure it stays on top */
+  z-index: 1000; /* Makes sure it's above other content */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow for a better look */
 }
 
+/* Container for navbar content */
 .navbar-container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+/* Logo styling */
 .navbar-logo {
-  color: white;
-  font-size: 24px;
+  font-size: 1.5rem;
+  color: #fff;
+  text-decoration: none;
   font-weight: bold;
 }
 
-.navbar-links {
+/* Navigation menu */
+.navbar-menu {
+  list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 1rem;
 }
 
-/* Hamburger icon styles */
-.hamburger-icon {
-  display: none; /* Hidden by default */
-  flex-direction: column;
-  gap: 4px;
-  cursor: pointer;
-}
-
-/* Hamburger bars */
-.hamburger-icon .bar {
-  width: 25px;
-  height: 3px;
-  background-color: white;
-  border-radius: 5px;
-}
-
+/* Individual links */
 .navbar-link {
-  color: white;
+  color: #fff;
   text-decoration: none;
-  font-size: 18px;
-  padding: 10px;
-  transition: background-color 0.3s, border-bottom 0.3s;
+  font-size: 1rem;
+  transition: color 0.3s;
 }
 
 .navbar-link:hover {
-  border-bottom: 3px solid #9ECADF;
+  color: #00aaff; 
+  border-bottom: 2px solid white;
 }
 
-/* Active Link Styles */
-.navbar-link.active {
-  border-bottom: 3px solid #fff;
-  border-radius: 5px;
-}
-
-/* Help Button */
-.navbar-link-help-btn {
-  background-color: #616B70;
-  color: white;
+/* Logout button */
+.logout-btn {
+  background: none;
   border: none;
-  padding: 10px;
+  color: #fff;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-size: 1rem;
 }
 
-.navbar-link-help-btn:hover {
-  background-color: #4b5459;
+.logout-btn:hover {
+  color: #ff0000;
 }
 
-/* Mobile responsiveness */
+/* Responsive styles for smaller screens */
 @media (max-width: 768px) {
-  /* Show the hamburger icon on mobile */
-  .hamburger-icon {
-    display: flex; /* Show the hamburger icon when the menu is closed */
-  }
-
-  /* Initially hide navbar links on mobile */
-  .navbar-links {
-    display: none; /* Hide the links */
-    width: 100%;
-    text-align: center;
-    gap: 10px;
+  .navbar-menu {
     flex-direction: column;
-    padding-top: 10px;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-right: 60px;
   }
-
-  /* Show the navbar links when the menu is open */
-  .navbar-links.open {
-    display: flex; /* Show the links when the menu is open */
-  }
-
-  .navbar-link {
-    padding: 15px;
-    font-size: 18px;
-  }
-
-  /* Hide the hamburger icon when the menu is open */
-  .hamburger-icon {
-    display: flex;
-  }
-
-  .navbar-links.open ~ .hamburger-icon {
-    display: none;  /* Hide hamburger icon when the menu is open */
-  }
-}
-
-.page {
-  margin-top: 80px; /* Give space for the fixed navbar */
-  padding: 20px;
-}
-
-.register-form {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }

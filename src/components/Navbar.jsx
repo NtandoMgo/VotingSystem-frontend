@@ -55,7 +55,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className={`navbar-link ${location.pathname === '/' ? 'active' : ''}`}
+                  className={`navbar-link ${location.pathname === '/register' ? 'active' : ''}`}
                 >
                   Register
                 </Link>

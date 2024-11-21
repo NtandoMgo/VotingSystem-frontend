@@ -27,7 +27,7 @@ const Login = () => {
       });
 
       const data = await response.json();
-
+        console.log("Role = " + data.role)
       if (response.ok) {
         // If login is successful, update the user context with user data (ID number and role)
         login({ idNumber, role: data.role });  // We store both ID and role in context

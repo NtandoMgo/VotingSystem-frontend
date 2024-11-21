@@ -7,6 +7,7 @@ const Registration = () => {
     name: '',
     email: '',
     idNumber: '',
+    province: '', // New field for province
   });
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
@@ -23,11 +24,11 @@ const Registration = () => {
 
   // Validate fields
   const validateForm = () => {
-    const { name, email, idNumber } = formData;
+    const { name, email, idNumber, province } = formData;
     const emailRegex = /\S+@\S+\.\S+/;
     const idRegex = /^\d{13}$/;
 
-    if (!name || !email || !idNumber) return 'All fields are required';
+    if (!name || !email || !idNumber || !province) return 'All fields are required';
     if (!emailRegex.test(email)) return 'Invalid email address';
     if (!idRegex.test(idNumber)) return 'ID Number must be exactly 13 digits';
     return null;
@@ -51,7 +52,7 @@ const Registration = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData), // Include province in form data
       });
 
       const data = await response.json();
@@ -61,7 +62,7 @@ const Registration = () => {
       localStorage.setItem('voter', JSON.stringify(formData));
 
       setSuccessMessage(data.message || 'Registration successful');
-      setTimeout(() => navigate('/vote'), 2000); // Redirect to voting page after 2 seconds
+      setTimeout(() => navigate('/login'), 2000); // Redirect to voting page after 2 seconds
     } catch (err) {
       setError(err.message || 'An error occurred during registration');
     }
@@ -105,6 +106,28 @@ const Registration = () => {
             placeholder="Enter your 13-digit ID number"
             required
           />
+        </div>
+        <div>
+          <label>Province</label>
+          <select
+            name="province"
+            value={formData.province}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Province</option>
+            <option value="Western Cape">Western Cape</option>
+            <option value="Eastern Cape">Eastern Cape</option>
+            <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+            <option value="Gauteng">Gauteng</option>
+            <option value="Mpumalanga">Mpumalanga</option>
+            <option value="Limpopo">Limpopo</option>
+            <option value="Free State">Free State</option>
+            <option value="North West">North West</option>
+            <option value="Northern Cape">Northern Cape</option>
+            <option value="North West">North West</option>
+            <option value="Western Cape">Western Cape</option>
+          </select>
         </div>
         <button type="submit">Register</button>
       </form>

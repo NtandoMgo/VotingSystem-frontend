@@ -1,0 +1,78 @@
+/* Navbar Styles */
+.navbar {
+    background-color: #333;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Ensure it stays on top */
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .navbar-logo {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .navbar-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .navbar-link {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .navbar-link:hover {
+    background-color: #575757;
+  }
+  
+  /* Active Link Styles */
+  .navbar-link.active {
+    background-color: #4caf50; /* Green for active link */
+    border-radius: 5px;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .navbar-links {
+      display: block;
+      text-align: center;
+      gap: 10px;
+    }
+  
+    .navbar-link {
+      padding: 15px;
+    }
+  }
+  
+  /* Page content */
+  .page {
+    margin-top: 80px; /* Give space for the fixed navbar */
+    padding: 20px;
+  }
+  
+  .register-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  

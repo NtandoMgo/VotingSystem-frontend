@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Admin.css';
 
-const API_URL = 'http://localhost:5000'; // Replace with your backend's base URL
+const API_URL = 'https://votingsystem-backend.onrender.com'; // Replace with your backend's base URL
 
 const Admin = () => {
   const [candidates, setCandidates] = useState([]);

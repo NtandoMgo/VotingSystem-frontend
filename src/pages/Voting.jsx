@@ -13,7 +13,7 @@ const Voting = () => {
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/results');
+        const response = await axios.get('https://votingsystem-backend.onrender.com/results');
         setCandidates(response.data);
       } catch (err) {
         setMessage('Failed to load candidates. Please try again.');
@@ -29,7 +29,7 @@ const Voting = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/vote', {
+      const response = await axios.post('https://votingsystem-backend.onrender.com/vote', {
         email: voter?.email, // Use voter's email
         candidateName: selectedCandidate, // Candidate's name
       });

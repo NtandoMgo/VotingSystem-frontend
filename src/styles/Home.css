@@ -108,6 +108,10 @@
   
   /* Responsive Grid for Smaller Screens */
   @media (max-width: 1200px) {
+    .home-container {
+      margin-top: 250px;
+      height: 100vh;
+    }
     .candidates-grid {
       grid-template-columns: repeat(3, 1fr); /* 3 columns on medium screens */
     }

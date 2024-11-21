@@ -6,6 +6,7 @@ import Admin from './pages/admin'; // Import Admin page
 import Login from './pages/Login';
 import { UserProvider } from './components/UserContext';
 import Navbar from './components/Navbar';
+import Home from './pages/Home';
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
     <Router>
       <Navbar/>
       <Routes>
-        <Route path="/" element={<Registration />} />
+      <Route path="/" element={<Home/>} />
+        <Route path="/register" element={<Registration />} />
         <Route path="/vote" element={<Voting />} />
         <Route path="/results" element={<Results />} />
         <Route path="/login" element={<Login/>} />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/Registration.css';
 
@@ -11,6 +11,7 @@ const Registration = () => {
   });
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false); // State to handle the confirmation prompt
   const navigate = useNavigate();
   const location = useLocation(); // Use location to get the candidate data
 
@@ -60,24 +61,44 @@ const Registration = () => {
       const registrationData = await registrationResponse.json();
       if (!registrationResponse.ok) throw new Error(registrationData.message || 'Registration failed');
 
-      // Automatically cast a vote after registration
+      // If a candidate was selected, show the confirmation modal
       if (selectedCandidate) {
-        const voteResponse = await fetch('https://votingsystem-backend.onrender.com/vote', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: formData.email, candidateName: selectedCandidate }),
-        });
-
-        const voteData = await voteResponse.json();
-        if (!voteResponse.ok) throw new Error(voteData.message || 'Voting failed');
-        setSuccessMessage(voteData.message || 'Vote successfully cast!');
+        setShowConfirmation(true);
+      } else {
+        // If no candidate is selected, just redirect to the voting page
+        setSuccessMessage('Registration successful');
+        setTimeout(() => navigate('/vote'), 2000);
       }
 
-      // Redirect to the home page after success
-      setTimeout(() => navigate('/', { state: { successMessage: 'Registration and voting completed successfully!' } }), 2000);
     } catch (err) {
-      setError(err.message || 'An error occurred during registration or voting');
+      setError(err.message || 'An error occurred during registration');
     }
+  };
+
+  // Handle confirmation of voting
+  const handleConfirmVote = async () => {
+    try {
+      const voteResponse = await fetch('https://votingsystem-backend.onrender.com/vote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: formData.email, candidateName: selectedCandidate }),
+      });
+
+      const voteData = await voteResponse.json();
+      if (!voteResponse.ok) throw new Error(voteData.message || 'Voting failed');
+
+      setSuccessMessage(voteData.message || 'Vote successfully cast!');
+      setTimeout(() => navigate('/'), 2000); // Redirect to the home page after voting
+    } catch (err) {
+      setError(err.message || 'Failed to cast vote');
+    }
+  };
+
+  // Handle cancellation of the voting confirmation
+  const handleCancelVote = () => {
+    setShowConfirmation(false); // Close the confirmation prompt
+    setSuccessMessage('Registration successful');
+    setTimeout(() => navigate('/vote'), 2000); // Redirect to the voting page if no voting action is confirmed
   };
 
   return (
@@ -85,6 +106,8 @@ const Registration = () => {
       <h2>Voter Registration</h2>
       {error && <p className="error">{error}</p>}
       {successMessage && <p className="success">{successMessage}</p>}
+      
+      {/* Registration form */}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name</label>
@@ -141,6 +164,15 @@ const Registration = () => {
         </div>
         <button type="submit">Register</button>
       </form>
+
+      {/* Confirmation modal if a candidate was selected */}
+      {showConfirmation && (
+        <div className="confirmation-modal">
+          <p>You're about to vote for {selectedCandidate}. Please confirm.</p>
+          <button onClick={handleConfirmVote}>Confirm</button>
+          <button onClick={handleCancelVote}>Cancel</button>
+        </div>
+      )}
     </div>
   );
 };

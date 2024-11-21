@@ -1,11 +1,10 @@
+// Login Component
 import React, { useState } from 'react';
-import { useUser } from '../components/UserContext';  // Import the useUser hook
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [idNumber, setIdNumber] = useState('');
   const [error, setError] = useState('');
-  const { login } = useUser();  // Destructure the login function from the context
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -27,14 +26,14 @@ const Login = () => {
       });
 
       const data = await response.json();
-        console.log("Role = " + data.role)
-      if (response.ok) {
-        // If login is successful, update the user context with user data (ID number and role)
-        login({ idNumber, role: data.role });  // We store both ID and role in context
 
-        // Navigate based on the role
+      if (response.ok) {
+        // Store voter details in localStorage
+        localStorage.setItem('voter', JSON.stringify({ email: data.email, idNumber, role: data.role }));
+
+        // Navigate to the appropriate page based on the role
         if (data.role === 'admin') {
-          navigate('/admin');  // Navigate to admin dashboard if admin
+          navigate('/admin');
         } else {
           navigate('/vote');  // Navigate to the voting page if voter
         }

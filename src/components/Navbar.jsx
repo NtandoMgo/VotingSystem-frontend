@@ -32,7 +32,9 @@ const Navbar = () => {
     <>
       <nav className="navbar">
         <div className="navbar-container">
-          <div className="navbar-logo">Voting System</div>
+          <Link to="/"
+             className="navbar-logo">Voting System
+          </Link>
 
           {/* Hamburger Icon for Mobile */}
           <div className="hamburger-icon" onClick={toggleMenu}>
@@ -50,6 +52,12 @@ const Navbar = () => {
                   className={`navbar-link ${location.pathname === '/' ? 'active' : ''}`}
                 >
                   Home
+                </Link>
+                <Link
+                  to="/register"
+                  className={`navbar-link ${location.pathname === '/' ? 'active' : ''}`}
+                >
+                  Register
                 </Link>
                 <Link
                   to="/login"

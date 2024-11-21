@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/Registration.css';
 
 const Registration = () => {
@@ -7,11 +7,14 @@ const Registration = () => {
     name: '',
     email: '',
     idNumber: '',
-    province: '', // New field for province
+    province: '',
   });
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
+  const location = useLocation(); // Use location to get the candidate data
+
+  const selectedCandidate = location.state?.candidate || null; // Retrieve selected candidate
 
   // Handle input changes
   const handleChange = (e) => {
@@ -47,24 +50,33 @@ const Registration = () => {
     }
 
     try {
-      const response = await fetch('https://votingsystem-backend.onrender.com/register', {
+      // Register voter
+      const registrationResponse = await fetch('https://votingsystem-backend.onrender.com/register', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData), // Include province in form data
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || 'Registration failed');
+      const registrationData = await registrationResponse.json();
+      if (!registrationResponse.ok) throw new Error(registrationData.message || 'Registration failed');
 
-      // Save voter details in localStorage
-      localStorage.setItem('voter', JSON.stringify(formData));
+      // Automatically cast a vote after registration
+      if (selectedCandidate) {
+        const voteResponse = await fetch('https://votingsystem-backend.onrender.com/vote', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: formData.email, candidateName: selectedCandidate }),
+        });
 
-      setSuccessMessage(data.message || 'Registration successful');
-      setTimeout(() => navigate('/login'), 2000); // Redirect to voting page after 2 seconds
+        const voteData = await voteResponse.json();
+        if (!voteResponse.ok) throw new Error(voteData.message || 'Voting failed');
+        setSuccessMessage(voteData.message || 'Vote successfully cast!');
+      }
+
+      // Redirect to the home page after success
+      setTimeout(() => navigate('/', { state: { successMessage: 'Registration and voting completed successfully!' } }), 2000);
     } catch (err) {
-      setError(err.message || 'An error occurred during registration');
+      setError(err.message || 'An error occurred during registration or voting');
     }
   };
 
@@ -125,8 +137,6 @@ const Registration = () => {
             <option value="Free State">Free State</option>
             <option value="North West">North West</option>
             <option value="Northern Cape">Northern Cape</option>
-            <option value="North West">North West</option>
-            <option value="Western Cape">Western Cape</option>
           </select>
         </div>
         <button type="submit">Register</button>

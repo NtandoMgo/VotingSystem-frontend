@@ -51,12 +51,12 @@ const Navbar = () => {
                 >
                   Home
                 </Link>
-                {/* <Link
+                <Link
                   to="/login"
                   className={`navbar-link ${location.pathname === '/login' ? 'active' : ''}`}
                 >
                   Login
-                </Link> */}
+                </Link>
               </>
             ) : (
               <>

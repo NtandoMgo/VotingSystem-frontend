@@ -6,6 +6,7 @@ const Home = () => {
   const [candidates, setCandidates] = useState([]);
   const [selectedCandidate, setSelectedCandidate] = useState(null); // Track selected candidate
   const [showModal, setShowModal] = useState(false); // Modal visibility state
+  const [successMessage, setSuccessMessage] = useState(''); // Display success message after voting
   const navigate = useNavigate();
 
   // Fetch candidates from the backend
@@ -29,14 +30,16 @@ const Home = () => {
     setShowModal(true); // Show the modal
   };
 
-  // Handle navigation
-  const navigateTo = (path) => {
+  // Navigate to registration page with the selected candidate
+  const handleRegister = () => {
     setShowModal(false); // Close the modal
-    navigate(path); // Navigate to the selected path
+    navigate('/register', { state: { candidate: selectedCandidate } }); // Pass candidate to Registration
   };
 
   return (
     <div className="home-container">
+      {/* Show success message */}
+      {successMessage && <p className="success-message">{successMessage}</p>}
       <h1>Vote for Your Favorite Candidate</h1>
       <div className="candidates-grid">
         {candidates.map((candidate) => (
@@ -59,10 +62,9 @@ const Home = () => {
         <div className="modal-overlay">
           <div className="modal">
             <h2>Vote for {selectedCandidate}</h2>
-            <p>You need to be logged in or registered to vote.</p>
+            <p>You need to register to vote.</p>
             <div className="modal-buttons">
-              <button onClick={() => navigateTo('/login')}>Login</button>
-              <button onClick={() => navigateTo('/register')}>Register</button>
+              <button onClick={handleRegister}>Register</button>
             </div>
             <button className="modal-close" onClick={() => setShowModal(false)}>
               Close

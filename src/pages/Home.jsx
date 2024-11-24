@@ -13,7 +13,7 @@ const Home = () => {
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
-        const response = await fetch('https://votingsystem-backend.onrender.com/results'); // Update to your backend API URL
+        const response = await fetch('https://votingsystem-backend-1.onrender.com/results'); // Update to your backend API URL
         if (!response.ok) throw new Error('Failed to fetch candidates');
         const data = await response.json();
         setCandidates(data);

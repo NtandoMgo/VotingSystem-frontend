@@ -53,7 +53,7 @@ const Registration = () => {
 
     try {
       // Register voter
-      const registrationResponse = await fetch('https://votingsystem-backend.onrender.com/register', {
+      const registrationResponse = await fetch('https://votingsystem-backend-1.onrender.com/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -80,7 +80,7 @@ const Registration = () => {
   // Handle confirmation of voting
   const handleConfirmVote = async () => {
     try {
-      const voteResponse = await fetch('https://votingsystem-backend.onrender.com/vote', {
+      const voteResponse = await fetch('https://votingsystem-backend-1.onrender.com/vote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ idNumber: formData.idNumber, candidateName: selectedCandidate }),

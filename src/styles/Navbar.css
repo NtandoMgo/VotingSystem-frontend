@@ -11,13 +11,14 @@
   justify-content: space-between;
   align-items: center;
   z-index: 1000; /* Makes sure it's above other content */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow for a better look */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* adds a subtle shadow for a better look */
 }
 
 /* Container for navbar content */
 .navbar-container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -65,6 +66,9 @@
 
 .logout-btn:hover {
   color: #ff0000;
+}
+.navbar-container button {
+  background-color: transparent;
 }
 
 /* Responsive styles for smaller screens */

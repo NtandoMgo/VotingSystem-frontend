@@ -6,7 +6,7 @@ const Results = () => {
 
   useEffect(() => {
     const fetchResults = async () => {
-      const response = await axios.get('https://votingsystem-backend.onrender.com/results');
+      const response = await axios.get('https://votingsystem-backend-1.onrender.com/results');
       setResults(response.data);
     };
     fetchResults();
